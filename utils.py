@@ -6,9 +6,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 import os
 
-def load_data():
+def load_data(sound_directory):
     x,y=[],[]
-    for file in glob.glob("/home/moe/Desktop/projects/sound_freq/speech_emotion_app/speech_data/Actor_*/*.wav"):
+    for file in glob.glob(sound_directory):
         file_name=os.path.basename(file)
         emotion=emotions[file_name.split("-")[2]]
         feature=extract_feature(file)

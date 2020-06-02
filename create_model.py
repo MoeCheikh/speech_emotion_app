@@ -21,7 +21,7 @@ emotions={
 
 #DataFlair - Load the data and extract features for each sound file
 
-x,y=load_data()
+x,y=load_data("/home/moe/Desktop/projects/sound_freq/speech_emotion_app/speech_data/Actor_*/*.wav")
 model=MLPClassifier(alpha=0.01, batch_size=256, epsilon=1e-08, hidden_layer_sizes=(300,), learning_rate='adaptive', max_iter=500)
 model.fit(x,y)
 pickle.dump(model, open("model.model", "wb"))
