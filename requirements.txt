@@ -1,0 +1,6 @@
+librosa 
+soundfile 
+numpy 
+sklearn 
+pyaudio 
+flask
