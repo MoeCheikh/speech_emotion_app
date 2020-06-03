@@ -54,30 +54,34 @@ def extract_feature(file_name):
     with soundfile.SoundFile(file_name) as sound_file:
         X = sound_file.read(dtype="float32")
         sample_rate=sound_file.samplerate
+
+        #Processing signal in the time-frequency domain
         try:
             stft=np.abs(librosa.stft(X))
         except Exception as e:
             print(e)
-            pass
+            return
+
+        #Initializing result array of lists
         result=np.array([])
         try:
             mfccs=np.mean(librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=40).T, axis=0)
             result=np.hstack((result, mfccs))
         except Exception as e:
             print(e)
-            pass
+            return
         try:
             chroma=np.mean(librosa.feature.chroma_stft(S=stft, sr=sample_rate).T,axis=0)
             result=np.hstack((result, chroma))
         except Exception as e:
             print(e)
-            pass
+            return
         try:
             mel=np.mean(librosa.feature.melspectrogram(X, sr=sample_rate).T,axis=0)
             result=np.hstack((result, mel))
         except Exception as e:
             print(e)
-            pass
+            return
         return result
 
 def convert(audio_path):
@@ -97,6 +101,9 @@ def convert(audio_path):
         print("Invalid File: Must be in .wav format")
         return
     else:
-        os.system(f"ffmpeg -i {audio_path} -ac 1 -ar 16000 {target_path}")
-        os.remove(audio_path)
+        try:
+            os.system(f"ffmpeg -i {audio_path} -ac 1 -ar 16000 {target_path}")
+        except Exception as e:
+            print(e)
+            return
         return target_path

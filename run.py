@@ -34,9 +34,10 @@ def results():
         except:
           return render_template('index.html', value="")
 
-    wav_file = os.listdir("./audio")[0]
-    wav_file = f"{os.getcwd()}/audio/{wav_file}"
-    wav_file = convert(wav_file)
+    wav_file_pre  = os.listdir("./audio")[0]
+    wav_file_pre = f"{os.getcwd()}/audio/{wav_file}"
+    wav_file = convert(wav_file_pre)
+    os.remove(wav_file_pre)
     model = pickle.load(open(f"{os.getcwd()}/model.model", "rb"))
     x_test =extract_feature(wav_file)
     y_pred=model.predict(np.array([x_test]))
