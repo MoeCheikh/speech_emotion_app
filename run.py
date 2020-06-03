@@ -14,6 +14,8 @@ app.config['UPLOAD_FOLDER'] = "./videos"
 def home():
     return render_template('index.html',value="")
 
+
+## Route for
 @app.route('/results', methods = ['GET', 'POST'])
 def results():
     if not os.path.isdir("./videos"):
