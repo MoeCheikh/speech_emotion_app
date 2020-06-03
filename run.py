@@ -8,18 +8,24 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 app = Flask(__name__)
 
-app.config['UPLOAD_FOLDER'] = "./videos"
+## Configure upload location for audio
+app.config['UPLOAD_FOLDER'] = "./audio"
 
+## Route for home page
 @app.route('/')
 def home():
     return render_template('index.html',value="")
 
 
-## Route for
+## Route for results
 @app.route('/results', methods = ['GET', 'POST'])
 def results():
-    if not os.path.isdir("./videos"):
-        os.mkdir("videos")
+    """
+    This route is used to save the file, convert the audio to 16000hz monochannel,
+    and predict the emotion using the saved binary model
+    """
+    if not os.path.isdir("./audio"):
+        os.mkdir("audio")
     if request.method == 'POST':
         try:
           f = request.files['file']
@@ -28,8 +34,8 @@ def results():
         except:
           return render_template('index.html', value="")
 
-    wav_file = os.listdir("./videos")[0]
-    wav_file = f"{os.getcwd()}/videos/{wav_file}"
+    wav_file = os.listdir("./audio")[0]
+    wav_file = f"{os.getcwd()}/audio/{wav_file}"
     wav_file = convert(wav_file)
     model = pickle.load(open(f"{os.getcwd()}/model.model", "rb"))
     x_test =extract_feature(wav_file)

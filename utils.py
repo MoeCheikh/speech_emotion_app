@@ -24,6 +24,9 @@ def load_data(sound_directory, emotions_to_observe):
     This function will loop through every file inside the RAVDESS directory and will
     load the data in and extract featurse IFF the emotion of the file is within The
     emotions_to_observe list
+
+    sound_directory (str): the directory of sound_data
+    emotions_to_observe (list(str)): the emotions that will be used in model training/prediction
     """
     x,y=[],[]
     for file in glob.glob(sound_directory):
@@ -41,9 +44,11 @@ def extract_feature(file_name):
 
     """
     This function will extract features from the wav file in terms of mfcc, chroma, and melspec,
-    mfcc: Mel Frequency Cepstral Coefficient, represents the short-term power spectrum of a sound
-    chroma: Pertains to the 12 different pitch classes
-    mel: Mel Spectrogram Frequency
+    mfcc --> Mel Frequency Cepstral Coefficient, represents the short-term power spectrum of a sound
+    chroma --> Pertains to the 12 different pitch classes
+    mel --> Mel Spectrogram Frequency
+
+    file_name (str): the filepath corresponding the .wav file that will have it's features extracted
     """
 
     with soundfile.SoundFile(file_name) as sound_file:
@@ -79,6 +84,8 @@ def convert(audio_path):
     """
     This function will convert any .wav files into .wav files compatible
     with the model. -ac audio channels 1 (monochannel), -ar audio frequency 16000hz
+
+    audio_path (str): the path associated with the .wav file that will be converted
     """
     file_split_list = audio_path.split("/")
     filename = file_split_list[-1].split(".")[0]
