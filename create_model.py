@@ -8,16 +8,6 @@ from sklearn.metrics import accuracy_score
 from utils import load_data
 
 #DataFlair - Emotions in the RAVDESS dataset
-emotions={
-  '01':'neutral',
-  '02':'calm',
-  '03':'happy',
-  '04':'sad',
-  '05':'angry',
-  '06':'fearful',
-  '07':'disgust',
-  '08':'surprised'
-}
 
 #DataFlair - Load the data and extract features for each sound file
 

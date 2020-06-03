@@ -14,8 +14,6 @@ def convert():
         if not target_path.endswith(".wav"):
             target_path += ".wav"
         convert_audio(audio_path, target_path)
-    else:
-        raise TypeError("The audio_path file you specified isn't appropriate for this operation")
 
 if __name__ == "__main__":
     # convert()

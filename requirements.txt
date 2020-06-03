@@ -3,4 +3,5 @@ soundfile
 numpy 
 sklearn 
 pyaudio 
-flask
+Flask
+werkzeug

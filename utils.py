@@ -6,6 +6,17 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 import os
 
+emotions={
+  '01':'Neutral',
+  '02':'Calm',
+  '03':'Happy',
+  '04':'Sad',
+  '05':'Angry',
+  '06':'Fearful',
+  '07':'Disgusted',
+  '08':'Surprised'
+}
+
 def load_data(sound_directory):
     x,y=[],[]
     for file in glob.glob(sound_directory):
@@ -51,44 +62,17 @@ def extract_feature(file_name, mfcc=True, chroma=True, mel=True):
             pass
         return result
 
-def convert_audio(audio_path, target_path, remove=True):
-    """This function sets the audio `audio_path` to:
-        - 16000Hz Sampling rate
-        - one audio channel ( mono )
-            Params:
-                audio_path (str): the path of audio wav file you want to convert
-                target_path (str): target path to save your new converted wav file
-                remove (bool): whether to remove the old file after converting
-        Note that this function requires ffmpeg installed in your system."""
-
-    os.system(f"ffmpeg -i {audio_path} -ac 1 -ar 16000 {target_path}")
-    # os.system(f"ffmpeg -i {audio_path} -ac 1 {target_path}")
-    if remove:
+def convert(audio_path):
+    file_split_list = audio_path.split("/")
+    filename = file_split_list[-1].split(".")[0]
+    new_filename = f"{filename}_converted.wav"
+    file_split_list[-1] = new_filename
+    seperator = "/"
+    target_path = seperator.join(file_split_list)
+    if not audio_path.endswith(".wav"):
+        print("Invalid File: Must be in .wav format")
+        return
+    else:
+        os.system(f"ffmpeg -i {audio_path} -ac 1 -ar 16000 {target_path}")
         os.remove(audio_path)
-
-
-def convert_audios(path, target_path, remove=True):
-    """Converts a path of wav files to:
-        - 16000Hz Sampling rate
-        - one audio channel ( mono )
-        and then put them into a new folder called `target_path`
-            Params:
-                audio_path (str): the path of audio wav file you want to convert
-                target_path (str): target path to save your new converted wav file
-                remove (bool): whether to remove the old file after converting
-        Note that this function requires ffmpeg installed in your system."""
-
-    for dirpath, dirnames, filenames in os.walk(path):
-        for dirname in dirnames:
-            dirname = os.path.join(dirpath, dirname)
-            target_dir = dirname.replace(path, target_path)
-            if not os.path.isdir(target_dir):
-                os.mkdir(target_dir)
-
-    for dirpath, _, filenames in os.walk(path):
-        for filename in filenames:
-            file = os.path.join(dirpath, filename)
-            if file.endswith(".wav"):
-                # it is a wav file
-                target_file = file.replace(path, target_path)
-                convert_audio(file, target_file, remove=remove)
+        return target_path
