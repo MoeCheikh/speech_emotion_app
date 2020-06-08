@@ -4,7 +4,6 @@ import os, glob, pickle
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
-import os
 
 #ALL emotions in RAVDESS dataset
 emotions={
@@ -50,6 +49,8 @@ def extract_feature(file_name):
 
     file_name (str): the filepath corresponding the .wav file that will have it's features extracted
     """
+    if not os.path.exists(file_name):
+        return "File Doesn't Exist"
 
     with soundfile.SoundFile(file_name) as sound_file:
         X = sound_file.read(dtype="float32")
@@ -91,6 +92,8 @@ def convert(audio_path):
 
     audio_path (str): the path associated with the .wav file that will be converted
     """
+    if not os.path.exists(audio_path):
+	       return "File Doesn't Exist"
     file_split_list = audio_path.split("/")
     filename = file_split_list[-1].split(".")[0]
     new_filename = f"{filename}_converted.wav"
@@ -98,8 +101,7 @@ def convert(audio_path):
     seperator = "/"
     target_path = seperator.join(file_split_list)
     if not audio_path.endswith(".wav"):
-        print("Invalid File: Must be in .wav format")
-        return
+        return "Invalid File: Must be in .wav format"
     else:
         try:
             os.system(f"ffmpeg -i {audio_path} -ac 1 -ar 16000 {target_path}")
