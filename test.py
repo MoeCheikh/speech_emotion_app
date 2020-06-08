@@ -16,7 +16,7 @@ def test_conversion():
 
     print("Testing Wav Conversion with test file...")
     result = convert(list_of_files[1])
-    if isinstance(result,str):
+    if isinstance(result,str) and result !="File Doesn't Exist" and result != "Invalid File: Must be in .wav format":
         print("WAV CONVERSION PASSED")
         os.remove(result)
     else:
