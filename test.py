@@ -24,16 +24,16 @@ def test_conversion():
     print("Testing Wav Conversion with empty input..")
     result = convert("")
     if result == "File Doesn't Exist":
-        print("FEATURE EXTRACTION PASSED")
+        print("WAV CONVERSION PASSED")
     else:
-        print("FEATURE EXTRACTION FAILED")
+        print("WAV CONVERSION FAILED")
 
     print("Testing Wav Conversion with non .wav input..")
     result = convert(list_of_files[2])
     if result == "Invalid File: Must be in .wav format":
-        print("FEATURE EXTRACTION PASSED")
+        print("WAV CONVERSION PASSED")
     else:
-        print("FEATURE EXTRACTION FAILED")
+        print("WAV CONVERSION FAILED")
 
 def test_feature_extraction():
     print("Testing Feature Extraction with test file..")

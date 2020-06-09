@@ -34,8 +34,8 @@ def load_data(sound_directory, emotions_to_observe):
         if emotion not in emotions_to_observe:
             continue
         feature=extract_feature(file)
-        x.append(feature)
-        y.append(emotion)
+        x.append(feature) #Feature Vector
+        y.append(emotion) #Class Variable
 
     return np.array(x),y
 
